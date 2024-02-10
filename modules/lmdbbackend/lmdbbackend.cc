@@ -2779,9 +2779,9 @@ public:
     declare(suffix, "flag-deleted", "Flag entries on deletion instead of deleting them", "no");
     declare(suffix, "lightning-stream", "Run in Lightning Stream compatible mode", "no");
   }
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new LMDBBackend(suffix);
+    return std::make_unique<LMDBBackend>(suffix);
   }
 };
 

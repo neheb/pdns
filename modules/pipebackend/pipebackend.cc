@@ -247,10 +247,10 @@ string PipeBackend::directBackendCmd(const string& query)
 }
 
 //! For the dynamic loader
-DNSBackend* PipeBackend::maker()
+std::unique_ptr<DNSBackend> PipeBackend::maker()
 {
   try {
-    return new PipeBackend();
+    return std::make_unique<PipeBackend>();
   }
   catch (...) {
     g_log << Logger::Error << kBackendId << " Unable to instantiate a pipebackend!" << endl;
@@ -368,9 +368,9 @@ public:
     declare(suffix, "abi-version", "Version of the pipe backend ABI", "1");
   }
 
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new PipeBackend(suffix);
+    return std::make_unique<PipeBackend>(suffix);
   }
 };
 

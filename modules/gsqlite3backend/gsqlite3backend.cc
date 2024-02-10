@@ -163,9 +163,9 @@ public:
   }
 
   //! Constructs a new gSQLite3Backend object.
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new gSQLite3Backend(d_mode, suffix);
+    return std::make_unique<gSQLite3Backend>(d_mode, suffix);
   }
 
 private:

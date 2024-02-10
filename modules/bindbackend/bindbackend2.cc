@@ -1509,16 +1509,16 @@ public:
     declare(suffix, "hybrid", "Store DNSSEC metadata in other backend", "no");
   }
 
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
     assertEmptySuffix(suffix);
-    return new Bind2Backend(suffix);
+    return std::make_unique<Bind2Backend>(suffix);
   }
 
-  DNSBackend* makeMetadataOnly(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> makeMetadataOnly(const string& suffix = "") override
   {
     assertEmptySuffix(suffix);
-    return new Bind2Backend(suffix, false);
+    return std::make_unique<Bind2Backend>(suffix, false);
   }
 
 private:

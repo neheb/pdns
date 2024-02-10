@@ -1190,9 +1190,9 @@ public:
     declare(suffix, "dnssec-keydir", "Directory to hold dnssec keys (also turns DNSSEC on)", "");
   }
 
-  DNSBackend* make(const string& suffix) override
+  std::unique_ptr<DNSBackend> make(const string& suffix) override
   {
-    return new GeoIPBackend(suffix);
+    return std::make_unique<GeoIPBackend>(suffix);
   }
 };
 

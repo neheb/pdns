@@ -970,10 +970,10 @@ void RemoteBackend::setFresh(uint32_t domain_id)
   }
 }
 
-DNSBackend* RemoteBackend::maker()
+std::unique_ptr<DNSBackend> RemoteBackend::maker()
 {
   try {
-    return new RemoteBackend();
+    return std::make_unique<RemoteBackend>();
   }
   catch (...) {
     g_log << Logger::Error << kBackendId << " Unable to instantiate a remotebackend!" << endl;
@@ -993,9 +993,9 @@ public:
     declare(suffix, "connection-string", "Connection string", "");
   }
 
-  DNSBackend* make(const std::string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const std::string& suffix = "") override
   {
-    return new RemoteBackend(suffix);
+    return std::make_unique<RemoteBackend>(suffix);
   }
 };
 

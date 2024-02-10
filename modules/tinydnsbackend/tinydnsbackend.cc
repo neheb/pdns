@@ -381,9 +381,9 @@ public:
     declare(suffix, "ignore-bogus-records", "The data.cdb file might have some incorrect record data, this causes PowerDNS to fail, where tinydns would send out truncated data. This option makes powerdns ignore that data!", "no");
   }
 
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new TinyDNSBackend(suffix);
+    return std::make_unique<TinyDNSBackend>(suffix);
   }
 };
 

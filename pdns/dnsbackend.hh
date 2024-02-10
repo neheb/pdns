@@ -482,8 +482,8 @@ public:
   BackendFactory(string name) :
     d_name(std::move(name)) {}
   virtual ~BackendFactory() = default;
-  virtual DNSBackend* make(const string& suffix) = 0;
-  virtual DNSBackend* makeMetadataOnly(const string& suffix)
+  virtual std::unique_ptr<DNSBackend> make(const string& suffix) = 0;
+  virtual std::unique_ptr<DNSBackend> makeMetadataOnly(const string& suffix)
   {
     return this->make(suffix);
   }

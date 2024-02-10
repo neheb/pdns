@@ -54,7 +54,7 @@ public:
   bool list(const DNSName& target, int domain_id, bool include_disabled = false) override;
   bool get(DNSResourceRecord& r) override;
   string directBackendCmd(const string& query) override;
-  static DNSBackend* maker();
+  static std::unique_ptr<DNSBackend> maker();
 
 private:
   void launch();

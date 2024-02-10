@@ -285,9 +285,9 @@ public:
     declare(suffix, "reconnect-attempts", "Number of attempts to re-establish a lost LDAP connection", "5");
   }
 
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new LdapBackend(suffix);
+    return std::make_unique<LdapBackend>(suffix);
   }
 };
 

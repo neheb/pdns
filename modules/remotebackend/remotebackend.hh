@@ -207,7 +207,7 @@ public:
   void setStale(uint32_t domain_id) override;
   void setFresh(uint32_t domain_id) override;
 
-  static DNSBackend* maker();
+  static std::unique_ptr<DNSBackend> maker();
 
 private:
   int build();

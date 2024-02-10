@@ -39,21 +39,19 @@ public:
     declare(suffix, "api", "Lua backend API version", "2");
   }
 
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
     const std::string apiSet = "lua2" + suffix + "-api";
     const int api = ::arg().asNum(apiSet);
-    DNSBackend* be;
     switch (api) {
     case 1:
       throw PDNSException("Use luabackend for api version 1");
     case 2:
-      be = new Lua2BackendAPIv2(suffix);
-      break;
+      return std::make_unique<Lua2BackendAPIv2>(suffix);
     default:
       throw PDNSException("Unsupported ABI version " + ::arg()[apiSet]);
     }
-    return be;
+    return nullptr;
   }
 };
 

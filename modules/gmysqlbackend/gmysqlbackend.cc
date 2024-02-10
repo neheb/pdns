@@ -168,9 +168,9 @@ public:
     declare(suffix, "search-comments-query", "", "SELECT domain_id,name,type,modified_at,account,comment FROM comments WHERE name LIKE ? OR comment LIKE ? LIMIT ?");
   }
 
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new gMySQLBackend(d_mode, suffix);
+    return std::make_unique<gMySQLBackend>(d_mode, suffix);
   }
 
 private:

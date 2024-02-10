@@ -153,9 +153,9 @@ public:
   }
 
   //! Constructs a new gODBCBackend object.
-  DNSBackend* make(const string& suffix = "") override
+  std::unique_ptr<DNSBackend> make(const string& suffix = "") override
   {
-    return new gODBCBackend(d_mode, suffix);
+    return std::make_unique<gODBCBackend>(d_mode, suffix);
   }
 
 private:

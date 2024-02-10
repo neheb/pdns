@@ -62,9 +62,9 @@ private:
   int d_devpollfd;
 };
 
-static FDMultiplexer* makeDevPoll(unsigned int)
+static std::unique_ptr<FDMultiplexer> makeDevPoll(unsigned int)
 {
-  return new DevPollFDMultiplexer();
+  return std::make_unique<DevPollFDMultiplexer>();
 }
 
 static struct DevPollRegisterOurselves
