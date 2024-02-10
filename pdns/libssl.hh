@@ -21,8 +21,9 @@ struct TLSCertKeyPair
   std::string d_cert;
   std::optional<std::string> d_key;
   std::optional<std::string> d_password;
-  explicit TLSCertKeyPair(const std::string& cert, std::optional<std::string> key = std::nullopt, std::optional<std::string> password = std::nullopt):
-    d_cert(cert), d_key(std::move(key)), d_password(std::move(password)) {
+  explicit TLSCertKeyPair(std::string cert, std::optional<std::string> key = std::nullopt, std::optional<std::string> password = std::nullopt) :
+    d_cert(std::move(cert)), d_key(std::move(key)), d_password(std::move(password))
+  {
   }
 };
 

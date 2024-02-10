@@ -29,14 +29,14 @@ class PDNSException
 {
 public:
   PDNSException() : reason("Unspecified") {};
-  PDNSException(const string& r) : reason(r) {};
-  
+  PDNSException(string r) :
+    reason(std::move(r)) {};
+
   string reason; //! Print this to tell the user what went wrong
 };
 
 class TimeoutException : public PDNSException
 {
 public:
-  TimeoutException() : PDNSException() {}
-  TimeoutException(const string& r) : PDNSException(r) {}
+  using PDNSException::PDNSException;
 };

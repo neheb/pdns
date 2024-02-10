@@ -35,7 +35,7 @@ class LdapSimpleAuthenticator : public LdapAuthenticator
   void fillLastError(LDAP* conn, int code);
 
 public:
-  LdapSimpleAuthenticator(const std::string& dn, const std::string& pw, int timeout);
+  LdapSimpleAuthenticator(std::string dn, std::string pw, int timeout);
   bool authenticate(LDAP* conn) override;
   std::string getError() const override;
 };
@@ -62,7 +62,7 @@ class LdapGssapiAuthenticator : public LdapAuthenticator
   int updateTgt();
 
 public:
-  LdapGssapiAuthenticator(const std::string& keytab, const std::string& credsCache, int timeout);
+  LdapGssapiAuthenticator(std::string keytab, std::string credsCache, int timeout);
   ~LdapGssapiAuthenticator() override;
   bool authenticate(LDAP* conn) override;
   std::string getError() const override;

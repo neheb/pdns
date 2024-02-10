@@ -27,8 +27,8 @@
  *
  ****************************/
 
-LdapSimpleAuthenticator::LdapSimpleAuthenticator(const std::string& dn, const std::string& pw, int tmout) :
-  d_binddn(dn), d_bindpw(pw), d_timeout(tmout)
+LdapSimpleAuthenticator::LdapSimpleAuthenticator(std::string dn, std::string pw, int tmout) :
+  d_binddn(std::move(dn)), d_bindpw(std::move(pw)), d_timeout(tmout)
 {
 }
 
@@ -79,8 +79,8 @@ static int ldapGssapiAuthenticatorSaslInteractCallback(LDAP* /* conn */, unsigne
   return LDAP_SUCCESS;
 }
 
-LdapGssapiAuthenticator::LdapGssapiAuthenticator(const std::string& kt, const std::string& ccache, int /* tmout */) :
-  d_logPrefix("[LDAP GSSAPI] "), d_keytabFile(kt), d_cCacheFile(ccache)
+LdapGssapiAuthenticator::LdapGssapiAuthenticator(std::string kt, std::string ccache, int /* tmout */) :
+  d_logPrefix("[LDAP GSSAPI] "), d_keytabFile(std::move(kt)), d_cCacheFile(std::move(ccache))
 {
   krb5_error_code code;
 

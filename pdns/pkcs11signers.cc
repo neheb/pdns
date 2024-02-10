@@ -356,7 +356,7 @@ class Pkcs11Token {
     }
 
   public:
-    Pkcs11Token(const std::shared_ptr<LockGuarded<Pkcs11Slot>>& slot, const std::string& label, const std::string& pub_label);
+    Pkcs11Token(const std::shared_ptr<LockGuarded<Pkcs11Slot>>& slot, std::string label, std::string pub_label);
     ~Pkcs11Token();
 
     bool Login(const std::string& pin) {
@@ -768,11 +768,11 @@ std::shared_ptr<Pkcs11Token> Pkcs11Token::GetToken(const std::string& module, co
   return pkcs11_tokens[tidx];
 }
 
-Pkcs11Token::Pkcs11Token(const std::shared_ptr<LockGuarded<Pkcs11Slot>>& slot, const std::string& label, const std::string& pub_label) :
+Pkcs11Token::Pkcs11Token(const std::shared_ptr<LockGuarded<Pkcs11Slot>>& slot, std::string label, std::string pub_label) :
   d_slot(slot),
   d_bits(0),
-  d_label(label),
-  d_pub_label(pub_label),
+  d_label(std::move(label)),
+  d_pub_label(std::move(pub_label)),
   d_loaded(false),
   d_err(0)
 {

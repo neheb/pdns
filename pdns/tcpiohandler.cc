@@ -110,7 +110,8 @@ public:
   }
 
   /* client-side connection */
-  OpenSSLTLSConnection(const std::string& hostname, bool hostIsAddr, int socket, const struct timeval& timeout, std::shared_ptr<SSL_CTX>& tlsCtx): d_tlsCtx(tlsCtx), d_conn(std::unique_ptr<SSL, void(*)(SSL*)>(SSL_new(tlsCtx.get()), SSL_free)), d_hostname(hostname), d_timeout(timeout)
+  OpenSSLTLSConnection(std::string hostname, bool hostIsAddr, int socket, const struct timeval& timeout, std::shared_ptr<SSL_CTX>& tlsCtx) :
+    d_tlsCtx(tlsCtx), d_conn(std::unique_ptr<SSL, void (*)(SSL*)>(SSL_new(tlsCtx.get()), SSL_free)), d_hostname(std::move(hostname)), d_timeout(timeout)
   {
     d_socket = socket;
 
@@ -1101,7 +1102,8 @@ public:
   }
 
   /* client-side connection */
-  GnuTLSConnection(const std::string& host, int socket, const struct timeval& timeout, std::shared_ptr<gnutls_certificate_credentials_st>& creds, const gnutls_priority_t priorityCache, bool validateCerts): d_creds(creds), d_conn(std::unique_ptr<gnutls_session_int, void(*)(gnutls_session_t)>(nullptr, gnutls_deinit)), d_host(host), d_client(true)
+  GnuTLSConnection(std::string host, int socket, const struct timeval& timeout, std::shared_ptr<gnutls_certificate_credentials_st>& creds, const gnutls_priority_t priorityCache, bool validateCerts) :
+    d_creds(creds), d_conn(std::unique_ptr<gnutls_session_int, void (*)(gnutls_session_t)>(nullptr, gnutls_deinit)), d_host(std::move(host)), d_client(true)
   {
     unsigned int sslOptions = GNUTLS_CLIENT | GNUTLS_NONBLOCK;
 #ifdef GNUTLS_NO_SIGNAL

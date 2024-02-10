@@ -120,7 +120,8 @@ private:
 class IPCipherObfuscator : public IPObfuscator
 {
 public:
-  IPCipherObfuscator(const std::string& key, bool decrypt)  : d_key(key), d_decrypt(decrypt)
+  IPCipherObfuscator(std::string key, bool decrypt) :
+    d_key(std::move(key)), d_decrypt(decrypt)
   {
     if(d_key.size()!=16) {
       throw std::runtime_error("IPCipher requires a 128 bit key");

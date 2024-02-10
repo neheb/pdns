@@ -234,8 +234,8 @@ private:
 
   struct RemoveSentinel
   {
-    explicit RemoveSentinel(const DNSName& dn, CommunicatorClass* cc) :
-      d_dn(dn), d_cc(cc)
+    explicit RemoveSentinel(DNSName dn, CommunicatorClass* cc) :
+      d_dn(std::move(dn)), d_cc(cc)
     {}
 
     ~RemoveSentinel()

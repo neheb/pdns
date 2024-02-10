@@ -527,7 +527,8 @@ private:
 class SimpleMatch
 {
 public:
-  SimpleMatch(const string &mask, bool caseFold = false): d_mask(mask), d_fold(caseFold)
+  SimpleMatch(string mask, bool caseFold = false) :
+    d_mask(std::move(mask)), d_fold(caseFold)
   {
   }
 

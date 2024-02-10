@@ -38,7 +38,8 @@
 
 class HttpRequest : public YaHTTP::Request {
 public:
-  HttpRequest(const string& logprefix_="") : YaHTTP::Request(), logprefix(logprefix_) { };
+  HttpRequest(string logprefix_ = "") :
+    YaHTTP::Request(), logprefix(std::move(logprefix_)) {};
 
   string logprefix;
   bool accept_yaml{false};
