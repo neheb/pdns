@@ -51,7 +51,7 @@ typedef multi_index_container <
                       member<DNSRecord, uint16_t, &DNSRecord::d_type>,
                       member<DNSRecord, uint16_t, &DNSRecord::d_class>,
                       BOOST_MULTI_INDEX_CONST_MEM_FUN(DNSRecord, const shared_ptr<const DNSRecordContent>&, getContent) >,
-        composite_key_compare<CanonDNSNameCompare, std::less<uint16_t>, std::less<uint16_t>, CIContentCompareStruct >
+        composite_key_compare<CanonDNSNameCompare, std::less<>, std::less<>, CIContentCompareStruct >
       > /* ordered_non_uniquw */
     > /* indexed_by */
 > /* multi_index_container */ records_t;
