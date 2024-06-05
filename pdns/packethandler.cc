@@ -943,8 +943,8 @@ void PacketHandler::addNSEC(DNSPacket& /* p */, std::unique_ptr<DNSPacket>& r, c
   if (d_sd.db == nullptr) {
     if(!B.getSOAUncached(d_sd.qname, d_sd)) {
       DLOG(g_log<<"Could not get SOA for domain"<<endl);
-      return;
     }
+    return;
   }
 
   DNSName before,after;
