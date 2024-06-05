@@ -399,7 +399,7 @@ string DynListener::getHelp()
   if(s_restfunc)
   {
     vector<string> parts;
-    parts.push_back("HELP");
+    parts.emplace_back("HELP");
     rest=((*s_restfunc)(parts,d_ppid));
     boost::split(funcs, rest, boost::is_any_of("\n"));
   }

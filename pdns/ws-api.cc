@@ -154,7 +154,7 @@ void apiServerConfig(HttpRequest* /* req */, HttpResponse* resp)
       value = ::arg()[item];
     }
 
-    doc.push_back(Json::object{
+    doc.emplace_back(Json::object{
       {"type", "ConfigSetting"},
       {"name", item},
       {"value", value},
@@ -173,7 +173,7 @@ void apiServerStatistics(HttpRequest* req, HttpResponse* resp)
       throw ApiException("Unknown statistic name");
     }
 
-    doc.push_back(Json::object{
+    doc.emplace_back(Json::object{
       {"type", "StatisticItem"},
       {"name", name},
       {"value", std::to_string(*stat)},
@@ -189,7 +189,7 @@ void apiServerStatistics(HttpRequest* req, HttpResponse* resp)
   productServerStatisticsFetch(general_stats);
 
   for (const auto& item : general_stats) {
-    doc.push_back(Json::object{
+    doc.emplace_back(Json::object{
       {"type", "StatisticItem"},
       {"name", item.first},
       {"value", item.second},
@@ -212,13 +212,13 @@ void apiServerStatistics(HttpRequest* req, HttpResponse* resp)
       if (item.second == 0) {
         continue;
       }
-      values.push_back(Json::object{
+      values.emplace_back(Json::object{
         {"name", DNSRecordContent::NumberToType(item.first)},
         {"value", std::to_string(item.second)},
       });
     }
 
-    doc.push_back(Json::object{
+    doc.emplace_back(Json::object{
       {"type", "MapStatisticItem"},
       {"name", "response-by-qtype"},
       {"value", values},
@@ -232,13 +232,13 @@ void apiServerStatistics(HttpRequest* req, HttpResponse* resp)
         continue;
       }
 
-      values.push_back(Json::object{
+      values.emplace_back(Json::object{
         {"name", std::to_string(item.first)},
         {"value", std::to_string(item.second)},
       });
     }
 
-    doc.push_back(Json::object{
+    doc.emplace_back(Json::object{
       {"type", "MapStatisticItem"},
       {"name", "response-sizes"},
       {"value", values},
@@ -252,13 +252,13 @@ void apiServerStatistics(HttpRequest* req, HttpResponse* resp)
         continue;
       }
 
-      values.push_back(Json::object{
+      values.emplace_back(Json::object{
         {"name", RCode::to_s(item.first)},
         {"value", std::to_string(item.second)},
       });
     }
 
-    doc.push_back(Json::object{
+    doc.emplace_back(Json::object{
       {"type", "MapStatisticItem"},
       {"name", "response-by-rcode"},
       {"value", values},
@@ -275,13 +275,13 @@ void apiServerStatistics(HttpRequest* req, HttpResponse* resp)
           continue;
         }
 
-        values.push_back(Json::object{
+        values.emplace_back(Json::object{
           {"name", item.first},
           {"value", std::to_string(item.second)},
         });
       }
 
-      doc.push_back(Json::object{
+      doc.emplace_back(Json::object{
         {"type", "RingStatisticItem"},
         {"name", ringName},
         {"size", std::to_string(S.getRingSize(ringName))},

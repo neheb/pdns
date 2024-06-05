@@ -295,28 +295,28 @@ void BaseLua4::prepareContext() {
                                        {"NOTZONE",  RCode::NotZone  },
                                        {"DROP",    -2               }}; // To give backport-incompatibility warning
   for(const auto& rcode : rcodes)
-    d_pd.push_back({rcode.first, rcode.second});
+    d_pd.emplace_back(rcode.first, rcode.second);
 
-  d_pd.push_back({"place", in_t{
-    {"QUESTION", 0},
-    {"ANSWER", 1},
-    {"AUTHORITY", 2},
-    {"ADDITIONAL", 3}
-  }});
+  d_pd.emplace_back("place", in_t{
+                               {"QUESTION", 0},
+                               {"ANSWER", 1},
+                               {"AUTHORITY", 2},
+                               {"ADDITIONAL", 3},
+                             });
 
-  d_pd.push_back({"loglevels", in_t{
-        {"Alert", LOG_ALERT},
-        {"Critical", LOG_CRIT},
-        {"Debug", LOG_DEBUG},
-        {"Emergency", LOG_EMERG},
-        {"Info", LOG_INFO},
-        {"Notice", LOG_NOTICE},
-        {"Warning", LOG_WARNING},
-        {"Error", LOG_ERR}
-          }});
+  d_pd.emplace_back("loglevels", in_t{
+                                   {"Alert", LOG_ALERT},
+                                   {"Critical", LOG_CRIT},
+                                   {"Debug", LOG_DEBUG},
+                                   {"Emergency", LOG_EMERG},
+                                   {"Info", LOG_INFO},
+                                   {"Notice", LOG_NOTICE},
+                                   {"Warning", LOG_WARNING},
+                                   {"Error", LOG_ERR},
+                                 });
 
   for(const auto& n : QType::names)
-    d_pd.push_back({n.first, n.second});
+    d_pd.emplace_back(n.first, n.second);
 
   d_lw->registerMember("tv_sec", &timeval::tv_sec);
   d_lw->registerMember("tv_usec", &timeval::tv_usec);

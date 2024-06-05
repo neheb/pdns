@@ -321,9 +321,9 @@ try
     {
       continue; // this was an IP address
     }
-    domains.push_back(TypedQuery(split.second, qtype));
+    domains.emplace_back(split.second, qtype);
     if(doWww)
-      domains.push_back(TypedQuery("www."+split.second, qtype));
+      domains.emplace_back("www." + split.second, qtype);
   }
   cerr<<"Read "<<domains.size()<<" domains!"<<endl;
   shuffle(domains.begin(), domains.end(), pdns::dns_random_engine());

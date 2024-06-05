@@ -277,12 +277,12 @@ try
   while(stringfgets(filePtr.get(), line)) {
     boost::trim_right(line);
     q=splitField(line, ' ');
-    g_queries.push_back(BenchQuery(q.first, DNSRecordContent::TypeToNumber(q.second)));
+    g_queries.emplace_back(q.first, DNSRecordContent::TypeToNumber(q.second));
   }
   filePtr.reset();
 
   for (unsigned int n = 0; n < numworkers; ++n) {
-    workers.push_back(std::thread(worker));
+    workers.emplace_back(worker);
   }
   for (auto& w : workers) {
     w.join();

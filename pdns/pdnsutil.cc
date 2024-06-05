@@ -209,7 +209,7 @@ static void dbBench(const std::string& fname)
     }
   }
   if(domains.empty())
-    domains.push_back("powerdns.com");
+    domains.emplace_back("powerdns.com");
 
   int n=0;
   DNSZoneRecord rr;
@@ -3427,7 +3427,7 @@ try
 
     // If DIGESTALGOS is unset
     if(cmds.size() == 2)
-      cmds.push_back("2");
+      cmds.emplace_back("2");
 
     if (!dk.setPublishCDS(DNSName(cmds.at(1)), cmds.at(2))) {
       cerr << "Could not set publishing for CDS records for " << cmds.at(1) << endl;

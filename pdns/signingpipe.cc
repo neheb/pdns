@@ -64,8 +64,8 @@ ChunkedSigningPipe::ChunkedSigningPipe(DNSName  signerName, bool mustSign, unsig
     d_maxchunkrecords(maxChunkRecords), d_threads(d_numworkers), d_mustSign(mustSign), d_final(false)
 {
   d_rrsetToSign = make_unique<rrset_t>();
-  d_chunks.push_back(vector<DNSZoneRecord>()); // load an empty chunk
-  
+  d_chunks.emplace_back(); // load an empty chunk
+
   if(!d_mustSign)
     return;
   
@@ -175,7 +175,7 @@ void ChunkedSigningPipe::addSignedToChunks(std::unique_ptr<chunk_t>& signedChunk
     from+=fit;
 
     if(from != signedChunk->end()) // it didn't fit, so add a new chunk
-      d_chunks.push_back(chunk_t());
+      d_chunks.emplace_back();
   }
 }
 
@@ -341,7 +341,7 @@ vector<DNSZoneRecord> ChunkedSigningPipe::getChunk(bool final)
   vector<DNSZoneRecord> front=d_chunks.front();
   d_chunks.pop_front();
   if(d_chunks.empty())
-    d_chunks.push_back(vector<DNSZoneRecord>());
+    d_chunks.emplace_back();
 /*  if(d_final && front.empty())
       cerr<<"getChunk returning empty in final"<<endl; */
   return front;

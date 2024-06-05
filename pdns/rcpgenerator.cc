@@ -402,7 +402,7 @@ void RecordTextReader::xfrSvcParamKeyVals(set<SvcParam>& val)
             hints.clear();
             break;
           }
-          hints.push_back(ComboAddress(v));
+          hints.emplace_back(v);
         }
       }
       try {

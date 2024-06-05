@@ -398,7 +398,7 @@ bool DNSSECKeeper::setNSEC3PARAM(const DNSName& zname, const NSEC3PARAMRecordCon
     meta.clear();
 
     if(narrow)
-      meta.push_back("1");
+      meta.emplace_back("1");
 
     return d_keymetadb->setDomainMetadata(zname, "NSEC3NARROW", meta) && clearMetaCache(zname);
   }
@@ -422,7 +422,7 @@ bool DNSSECKeeper::setPresigned(const DNSName& zname)
   }
 
   vector<string> meta;
-  meta.push_back("1");
+  meta.emplace_back("1");
   return d_keymetadb->setDomainMetadata(zname, "PRESIGNED", meta) && clearMetaCache(zname);
 }
 
@@ -488,7 +488,7 @@ bool DNSSECKeeper::setPublishCDNSKEY(const DNSName& zname, bool deleteAlg)
   }
 
   vector<string> meta;
-  meta.push_back(deleteAlg ? "0" : "1");
+  meta.emplace_back(deleteAlg ? "0" : "1");
   return d_keymetadb->setDomainMetadata(zname, "PUBLISH-CDNSKEY", meta) && clearMetaCache(zname);
 }
 

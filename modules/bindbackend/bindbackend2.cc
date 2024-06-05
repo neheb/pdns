@@ -1442,7 +1442,7 @@ bool Bind2Backend::createSecondaryDomain(const string& ip, const DNSName& domain
 
   BB2DomainInfo bbd = createDomainEntry(domain, filename);
   bbd.d_kind = DomainInfo::Secondary;
-  bbd.d_primaries.push_back(ComboAddress(ip, 53));
+  bbd.d_primaries.emplace_back(ip, 53);
   bbd.setCtime();
   safePutBBDomainInfo(bbd);
 

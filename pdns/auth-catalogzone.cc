@@ -95,7 +95,7 @@ std::string CatalogInfo::toJson() const
   if (!d_group.empty()) {
     json11::Json::array entries;
     for (const auto& group : d_group) {
-      entries.push_back(group);
+      entries.emplace_back(group);
     }
     object["group"] = entries;
   }

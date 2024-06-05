@@ -652,7 +652,7 @@ bool RemoteBackend::autoPrimaryBackend(const string& ip, const DNSName& domain, 
   Json::array rrset;
 
   for (const auto& ns : nsset) {
-    rrset.push_back(Json::object{
+    rrset.emplace_back(Json::object{
       {"qtype", ns.qtype.toString()},
       {"qname", ns.qname.toString()},
       {"qclass", QClass::IN.getCode()},
@@ -703,7 +703,7 @@ bool RemoteBackend::replaceRRSet(uint32_t domain_id, const DNSName& qname, const
 {
   Json::array json_rrset;
   for (const auto& rr : rrset) {
-    json_rrset.push_back(Json::object{
+    json_rrset.emplace_back(Json::object{
       {"qtype", rr.qtype.toString()},
       {"qname", rr.qname.toString()},
       {"qclass", QClass::IN.getCode()},
@@ -738,7 +738,7 @@ bool RemoteBackend::feedEnts(int domain_id, map<DNSName, bool>& nonterm)
   Json::array nts;
 
   for (const auto& t : nonterm) {
-    nts.push_back(Json::object{
+    nts.emplace_back(Json::object{
       {"nonterm", t.first.toString()},
       {"auth", t.second}});
   }
@@ -757,7 +757,7 @@ bool RemoteBackend::feedEnts3(int domain_id, const DNSName& domain, map<DNSName,
   Json::array nts;
 
   for (const auto& t : nonterm) {
-    nts.push_back(Json::object{
+    nts.emplace_back(Json::object{
       {"nonterm", t.first.toString()},
       {"auth", t.second}});
   }

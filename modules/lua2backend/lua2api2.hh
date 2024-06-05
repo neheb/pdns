@@ -208,8 +208,8 @@ public:
 
     lookup_context_t ctx;
     if (p != NULL) {
-      ctx.emplace_back(lookup_context_t::value_type{"source_address", p->getInnerRemote().toString()});
-      ctx.emplace_back(lookup_context_t::value_type{"real_source_address", p->getRealRemote().toString()});
+      ctx.emplace_back("source_address", p->getInnerRemote().toString());
+      ctx.emplace_back("real_source_address", p->getRealRemote().toString());
     }
 
     logCall("lookup", "qtype=" << qtype.toString() << ",qname=" << qname << ",domain_id=" << domain_id);
@@ -260,7 +260,7 @@ public:
         di.last_check = static_cast<time_t>(boost::get<long>(item.second));
       else if (item.first == "masters")
         for (const auto& primary : boost::get<vector<string>>(item.second))
-          di.primaries.push_back(ComboAddress(primary, 53));
+          di.primaries.emplace_back(primary, 53);
       else if (item.first == "id")
         di.id = static_cast<int>(boost::get<long>(item.second));
       else if (item.first == "notified_serial")

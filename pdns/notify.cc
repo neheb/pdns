@@ -86,20 +86,20 @@ try
 //    throw runtime_error("Failed to bind local socket to address "+local.toString()+": "+stringerror());
 
   try {
-     addrs.emplace(ComboAddress{argv[1], 53});
+    addrs.emplace(argv[1], 53);
   } catch (PDNSException &ex) {
      /* needs resolving, maybe */
      struct addrinfo *info;
      vector<string> parts;
      boost::split(parts, argv[1], [](char c){return c == ':';});
      if (parts.size() == 1)
-       parts.push_back("domain");
+       parts.emplace_back("domain");
      else if (parts.size() != 2)
        throw runtime_error("Invalid hostname:port syntax");
      if (getaddrinfo(parts[0].c_str(), parts[1].c_str(), NULL, &info) != 0)
        throw runtime_error("Cannot resolve '" + string(argv[1]) +"'");
      for(auto ptr = info; ptr != NULL; ptr = ptr->ai_next)
-       addrs.emplace(ComboAddress{ptr->ai_addr, ptr->ai_addrlen});
+       addrs.emplace(ptr->ai_addr, ptr->ai_addrlen);
   }
 
   for(const auto &addr: addrs) {

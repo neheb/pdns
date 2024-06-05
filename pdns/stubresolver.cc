@@ -95,7 +95,7 @@ void stubParseResolveConf()
     vector<string> parts;
     stringtok(parts, ::arg()["resolver"], " ,\t");
     for (const auto& addr : parts) {
-      resolversForStub->push_back(ComboAddress(addr, 53));
+      resolversForStub->emplace_back(addr, 53);
     }
   }
 

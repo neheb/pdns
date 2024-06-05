@@ -177,7 +177,7 @@ try
             obj["name"] = i->name.toString();
 
             while(zpt.get(rr))
-              recs.push_back(emitRecord(rr.qname, rr.qtype.toString(), rr.content, rr.ttl));
+              recs.emplace_back(emitRecord(rr.qname, rr.qtype.toString(), rr.content, rr.ttl));
             obj["records"] = recs;
             Json tmp = obj;
             cout<<tmp.dump();
@@ -213,7 +213,7 @@ try
       obj["name"] = ::arg()["zone-name"];
 
       while(zpt.get(rr))
-        records.push_back(emitRecord(rr.qname, rr.qtype.toString(), rr.content, rr.ttl));
+        records.emplace_back(emitRecord(rr.qname, rr.qtype.toString(), rr.content, rr.ttl));
       obj["records"] = records;
 
       Json tmp = obj;

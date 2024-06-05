@@ -473,7 +473,7 @@ vector<std::string> DNSName::getRawLabels() const
   ret.reserve(countLabels());
   // 3www4ds9a2nl0
   for(const unsigned char* p = (const unsigned char*) d_storage.c_str(); p < ((const unsigned char*) d_storage.c_str()) + d_storage.size() && *p; p+=*p+1) {
-    ret.push_back({(const char*)p+1, (size_t)*p}); // XXX FIXME
+    ret.emplace_back((const char*)p + 1, (size_t)*p); // XXX FIXME
   }
   return ret;
 }

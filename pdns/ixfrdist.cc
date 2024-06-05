@@ -1126,7 +1126,7 @@ static void handleTCPRequest(int fd, boost::any&) {
 
   {
     std::lock_guard<std::mutex> lg(g_tcpRequestFDsMutex);
-    g_tcpRequestFDs.push({cfd, saddr});
+    g_tcpRequestFDs.emplace(cfd, saddr);
   }
   g_tcpHandlerCV.notify_one();
 }
@@ -1847,7 +1847,7 @@ int main(int argc, char** argv) {
     vector<std::thread> tcpHandlers;
     tcpHandlers.reserve(configuration->tcpInThreads);
     for (size_t i = 0; i < tcpHandlers.capacity(); ++i) {
-      tcpHandlers.push_back(std::thread(tcpWorker, i));
+      tcpHandlers.emplace_back(tcpWorker, i);
     }
 
     struct timeval now;

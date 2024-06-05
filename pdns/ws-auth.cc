@@ -523,13 +523,13 @@ static void fillZone(UeberBackend& backend, const DNSName& zonename, HttpRespons
 
       while (rit != records.end() && rit->qname == current_qname && rit->qtype == current_qtype) {
         ttl = min(ttl, rit->ttl);
-        rrset_records.push_back(Json::object{
+        rrset_records.emplace_back(Json::object{
           {"disabled", rit->disabled},
           {"content", makeApiRecordContent(rit->qtype, rit->content)}});
         rit++;
       }
       while (cit != comments.end() && cit->qname == current_qname && cit->qtype == current_qtype) {
-        rrset_comments.push_back(Json::object{
+        rrset_comments.emplace_back(Json::object{
           {"modified_at", (double)cit->modified_at},
           {"account", cit->account},
           {"content", cit->content}});
@@ -2556,7 +2556,7 @@ static void apiServerSearchData(HttpRequest* req, HttpResponse* resp)
 
   for (const DomainInfo& domainInfo : domains) {
     if ((objectType == ObjectType::ALL || objectType == ObjectType::ZONE) && ents < maxEnts && simpleMatch.match(domainInfo.zone)) {
-      doc.push_back(Json::object{
+      doc.emplace_back(Json::object{
         {"object_type", "zone"},
         {"zone_id", apiZoneNameToId(domainInfo.zone)},
         {"name", domainInfo.zone.toString()}});

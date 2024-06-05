@@ -595,7 +595,7 @@ static vector<ComboAddress> convComboAddressList(const iplist_t& items, uint16_t
   result.reserve(items.size());
 
   for(const auto& item : items) {
-    result.emplace_back(ComboAddress(item.second, port));
+    result.emplace_back(item.second, port);
   }
 
   return result;

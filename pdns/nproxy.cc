@@ -272,7 +272,7 @@ try
   if(g_vm.count("listen-address"))
     addresses=g_vm["listen-address"].as<vector<string> >();
   else
-    addresses.push_back("::");
+    addresses.emplace_back("::");
 
   // create sockets to listen on
   

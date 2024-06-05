@@ -938,8 +938,8 @@ bool GeoIPBackend::getAllDomainMetadata(const DNSName& name, std::map<std::strin
   for (const GeoIPDomain& dom : s_domains) {
     if (dom.domain == name) {
       if (hasDNSSECkey(dom.domain)) {
-        meta[string("NSEC3NARROW")].push_back("1");
-        meta[string("NSEC3PARAM")].push_back("1 0 1 f95a");
+        meta[string("NSEC3NARROW")].emplace_back("1");
+        meta[string("NSEC3PARAM")].emplace_back("1 0 1 f95a");
       }
       return true;
     }
@@ -957,9 +957,9 @@ bool GeoIPBackend::getDomainMetadata(const DNSName& name, const std::string& kin
     if (dom.domain == name) {
       if (hasDNSSECkey(dom.domain)) {
         if (kind == "NSEC3NARROW")
-          meta.push_back(string("1"));
+          meta.emplace_back("1");
         if (kind == "NSEC3PARAM")
-          meta.push_back(string("1 0 1 f95a"));
+          meta.emplace_back("1 0 1 f95a");
       }
       return true;
     }

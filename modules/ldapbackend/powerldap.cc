@@ -94,7 +94,7 @@ bool PowerLDAP::SearchResult::getNext(PowerLDAP::sentry_t& entry, bool dn, int /
 
   if (dn) {
     attr = ldap_get_dn(d_ld, object);
-    values.push_back(string(attr));
+    values.emplace_back(attr);
     ldap_memfree(attr);
     entry["dn"] = values;
   }
@@ -104,7 +104,7 @@ bool PowerLDAP::SearchResult::getNext(PowerLDAP::sentry_t& entry, bool dn, int /
       if ((berval = ldap_get_values_len(d_ld, object, attr)) != NULL) {
         values.clear();
         for (i = 0; i < ldap_count_values_len(berval); i++) {
-          values.push_back(berval[i]->bv_val); // use berval[i]->bv_len for non string values?
+          values.emplace_back(berval[i]->bv_val); // use berval[i]->bv_len for non string values?
         }
 
         entry[attr] = values;
@@ -351,7 +351,7 @@ bool PowerLDAP::getSearchEntry(int msgid, sentry_t& entry, bool dn)
 
   if (dn) {
     attr = ldap_get_dn(d_ld, object);
-    values.push_back(string(attr));
+    values.emplace_back(attr);
     ldap_memfree(attr);
     entry["dn"] = values;
   }
@@ -361,7 +361,7 @@ bool PowerLDAP::getSearchEntry(int msgid, sentry_t& entry, bool dn)
       if ((berval = ldap_get_values_len(d_ld, object, attr)) != NULL) {
         values.clear();
         for (i = 0; i < ldap_count_values_len(berval); i++) {
-          values.push_back(berval[i]->bv_val); // use berval[i]->bv_len for non string values?
+          values.emplace_back(berval[i]->bv_val); // use berval[i]->bv_len for non string values?
         }
 
         entry[attr] = values;

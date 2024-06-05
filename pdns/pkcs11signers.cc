@@ -816,50 +816,52 @@ void PKCS11DNSCryptoKeyEngine::create(unsigned int bits) {
   mech.ulParameterLen = 0;
 
   if (mech.mechanism == CKM_RSA_PKCS_KEY_PAIR_GEN) {
-    pubAttr.push_back(P11KitAttribute(CKA_CLASS, (unsigned long)CKO_PUBLIC_KEY));
-    pubAttr.push_back(P11KitAttribute(CKA_KEY_TYPE, (unsigned long)CKK_RSA));
-    pubAttr.push_back(P11KitAttribute(CKA_TOKEN, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_ENCRYPT, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_VERIFY, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_WRAP, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_MODULUS_BITS, (unsigned long)bits));
-    pubAttr.push_back(P11KitAttribute(CKA_PUBLIC_EXPONENT, pubExp));
-    pubAttr.push_back(P11KitAttribute(CKA_LABEL, d_pub_label));
+    pubAttr.emplace_back(CKA_CLASS, (unsigned long)CKO_PUBLIC_KEY);
+    pubAttr.emplace_back(CKA_KEY_TYPE, (unsigned long)CKK_RSA);
+    pubAttr.emplace_back(CKA_TOKEN, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_ENCRYPT, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_VERIFY, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_WRAP, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_MODULUS_BITS, (unsigned long)bits);
+    pubAttr.emplace_back(CKA_PUBLIC_EXPONENT, pubExp);
+    pubAttr.emplace_back(CKA_LABEL, d_pub_label);
 
-    privAttr.push_back(P11KitAttribute(CKA_CLASS, (unsigned long)CKO_PRIVATE_KEY));
-    privAttr.push_back(P11KitAttribute(CKA_KEY_TYPE, (unsigned long)CKK_RSA));
-    privAttr.push_back(P11KitAttribute(CKA_TOKEN, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_PRIVATE, (char)CK_TRUE));
-  //  privAttr.push_back(P11KitAttribute(CKA_SUBJECT, "CN=keygen"));
-    privAttr.push_back(P11KitAttribute(CKA_ID, "\x01\x02\x03\x04")); // this is mandatory if you want to export anything
-    privAttr.push_back(P11KitAttribute(CKA_SENSITIVE, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_DECRYPT, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_SIGN, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_UNWRAP, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_LABEL, d_label));
+    privAttr.emplace_back(CKA_CLASS, (unsigned long)CKO_PRIVATE_KEY);
+    privAttr.emplace_back(CKA_KEY_TYPE, (unsigned long)CKK_RSA);
+    privAttr.emplace_back(CKA_TOKEN, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_PRIVATE, (char)CK_TRUE);
+    //  privAttr.push_back(P11KitAttribute(CKA_SUBJECT, "CN=keygen"));
+    privAttr.emplace_back(CKA_ID, "\x01\x02\x03\x04"); // this is mandatory if you want to export anything
+    privAttr.emplace_back(CKA_SENSITIVE, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_DECRYPT, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_SIGN, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_UNWRAP, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_LABEL, d_label);
   } else if (mech.mechanism == CKM_ECDSA_KEY_PAIR_GEN) {
-    pubAttr.push_back(P11KitAttribute(CKA_CLASS, (unsigned long)CKO_PUBLIC_KEY));
-    pubAttr.push_back(P11KitAttribute(CKA_KEY_TYPE, (unsigned long)CKK_ECDSA));
-    pubAttr.push_back(P11KitAttribute(CKA_TOKEN, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_ENCRYPT, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_VERIFY, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_WRAP, (char)CK_TRUE));
-    pubAttr.push_back(P11KitAttribute(CKA_LABEL, d_pub_label));
-    if (d_algorithm == 13) pubAttr.push_back(P11KitAttribute(CKA_ECDSA_PARAMS, ECDSA256_PARAMS));
-    else if (d_algorithm == 14) pubAttr.push_back(P11KitAttribute(CKA_ECDSA_PARAMS, ECDSA384_PARAMS));
+    pubAttr.emplace_back(CKA_CLASS, (unsigned long)CKO_PUBLIC_KEY);
+    pubAttr.emplace_back(CKA_KEY_TYPE, (unsigned long)CKK_ECDSA);
+    pubAttr.emplace_back(CKA_TOKEN, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_ENCRYPT, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_VERIFY, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_WRAP, (char)CK_TRUE);
+    pubAttr.emplace_back(CKA_LABEL, d_pub_label);
+    if (d_algorithm == 13)
+      pubAttr.emplace_back(CKA_ECDSA_PARAMS, ECDSA256_PARAMS);
+    else if (d_algorithm == 14)
+      pubAttr.emplace_back(CKA_ECDSA_PARAMS, ECDSA384_PARAMS);
     else throw PDNSException("pkcs11: unknown algorithm "+std::to_string(d_algorithm)+" for ECDSA key pair generation");
 
-    privAttr.push_back(P11KitAttribute(CKA_CLASS, (unsigned long)CKO_PRIVATE_KEY));
-    privAttr.push_back(P11KitAttribute(CKA_KEY_TYPE, (unsigned long)CKK_ECDSA));
-    privAttr.push_back(P11KitAttribute(CKA_TOKEN, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_PRIVATE, (char)CK_TRUE));
-  //  privAttr.push_back(P11KitAttribute(CKA_SUBJECT, "CN=keygen"));
-    privAttr.push_back(P11KitAttribute(CKA_ID, "\x01\x02\x03\x04")); // this is mandatory if you want to export anything
-    privAttr.push_back(P11KitAttribute(CKA_SENSITIVE, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_DECRYPT, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_SIGN, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_UNWRAP, (char)CK_TRUE));
-    privAttr.push_back(P11KitAttribute(CKA_LABEL, d_label));
+    privAttr.emplace_back(CKA_CLASS, (unsigned long)CKO_PRIVATE_KEY);
+    privAttr.emplace_back(CKA_KEY_TYPE, (unsigned long)CKK_ECDSA);
+    privAttr.emplace_back(CKA_TOKEN, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_PRIVATE, (char)CK_TRUE);
+    //  privAttr.push_back(P11KitAttribute(CKA_SUBJECT, "CN=keygen"));
+    privAttr.emplace_back(CKA_ID, "\x01\x02\x03\x04"); // this is mandatory if you want to export anything
+    privAttr.emplace_back(CKA_SENSITIVE, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_DECRYPT, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_SIGN, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_UNWRAP, (char)CK_TRUE);
+    privAttr.emplace_back(CKA_LABEL, d_label);
   } else {
     throw PDNSException("pkcs11: don't know how make key for algorithm "+std::to_string(d_algorithm));
   }
