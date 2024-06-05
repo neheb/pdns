@@ -200,7 +200,7 @@ public:
       return this;
 
     if (d_dolog) {
-      g_log << Logger::Warning << "Query " << ((long)(void*)this) << ": " << d_query << endl;
+      g_log << Logger::Warning << "Query " << (long)this << ": " << d_query << endl;
       d_dtime.set();
     }
 
@@ -262,7 +262,7 @@ public:
     }
 
     if (d_dolog)
-      g_log << Logger::Warning << "Query " << ((long)(void*)this) << ": " << d_dtime.udiffNoReset() << " us to execute" << endl;
+      g_log << Logger::Warning << "Query " << (long)this << ": " << d_dtime.udiffNoReset() << " us to execute" << endl;
 
     return this;
   }
@@ -270,7 +270,7 @@ public:
   bool hasNextRow() override
   {
     if (d_dolog && d_residx == d_resnum) {
-      g_log << Logger::Warning << "Query " << ((long)(void*)this) << ": " << d_dtime.udiffNoReset() << " us total to last row" << endl;
+      g_log << Logger::Warning << "Query " << (long)this << ": " << d_dtime.udiffNoReset() << " us total to last row" << endl;
     }
     return d_residx < d_resnum;
   }

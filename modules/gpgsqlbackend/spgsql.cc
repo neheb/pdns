@@ -76,11 +76,11 @@ public:
   {
     prepareStatement();
     if (d_dolog) {
-      g_log << Logger::Warning << "Query " << ((long)(void*)this) << ": Statement: " << d_query << endl;
+      g_log << Logger::Warning << "Query " << (long)this << ": Statement: " << d_query << endl;
       if (d_paridx) {
         // Log message is similar, but not exactly the same as the postgres server log.
         std::stringstream log_message;
-        log_message << "Query " << ((long)(void*)this) << ": Parameters: ";
+        log_message << "Query " << (long)this << ": Parameters: ";
         for (int i = 0; i < d_paridx; i++) {
           if (i != 0) {
             log_message << ", ";
@@ -112,7 +112,7 @@ public:
     d_cur_set = 0;
     if (d_dolog) {
       auto diff = d_dtime.udiffNoReset();
-      g_log << Logger::Warning << "Query " << ((long)(void*)this) << ": " << diff << " us to execute" << endl;
+      g_log << Logger::Warning << "Query " << (long)this << ": " << diff << " us to execute" << endl;
     }
 
     nextResult();
@@ -143,7 +143,7 @@ public:
   bool hasNextRow() override
   {
     if (d_dolog && d_residx == d_resnum) {
-      g_log << Logger::Warning << "Query " << ((long)(void*)this) << ": " << d_dtime.udiff() << " us total to last row" << endl;
+      g_log << Logger::Warning << "Query " << (long)this << ": " << d_dtime.udiff() << " us total to last row" << endl;
     }
 
     return d_residx < d_resnum;
