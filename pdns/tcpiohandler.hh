@@ -483,7 +483,7 @@ public:
     if (d_conn) {
       return d_conn->getServerNameIndication();
     }
-    return std::string();
+    return {};
   }
 
   std::vector<uint8_t> getNextProtocol() const
@@ -491,7 +491,7 @@ public:
     if (d_conn) {
       return d_conn->getNextProtocol();
     }
-    return std::vector<uint8_t>();
+    return {};
   }
 
   LibsslTLSVersion getTLSVersion() const

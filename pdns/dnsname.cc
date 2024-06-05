@@ -373,7 +373,7 @@ void DNSName::makeUsRelative(const DNSName& zone)
 DNSName DNSName::getCommonLabels(const DNSName& other) const
 {
   if (empty() || other.empty()) {
-    return DNSName();
+    return {};
   }
 
   DNSName result(g_rootdnsname);
@@ -699,9 +699,9 @@ std::string_view DNSName::RawLabelsVisitor::front() const
   }
   uint8_t length = d_storage.at(0);
   if (length == 0) {
-    return std::string_view();
+    return {};
   }
-  return std::string_view(&d_storage.at(1), length);
+  return {&d_storage.at(1), length};
 }
 
 std::string_view DNSName::RawLabelsVisitor::back() const
@@ -712,9 +712,9 @@ std::string_view DNSName::RawLabelsVisitor::back() const
   size_t offset = d_labelPositions.at(d_position-1);
   uint8_t length = d_storage.at(offset);
   if (length == 0) {
-    return std::string_view();
+    return {};
   }
-  return std::string_view(&d_storage.at(offset + 1), length);
+  return {&d_storage.at(offset + 1), length};
 }
 
 bool DNSName::RawLabelsVisitor::pop_back()

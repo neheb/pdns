@@ -220,7 +220,7 @@ private:
     {
       uint16_t ret;
       memcpy(&ret, &key[key.size() - 2], sizeof(ret));
-      return QType(ntohs(ret));
+      return {ntohs(ret)};
     }
   };
 

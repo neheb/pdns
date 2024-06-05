@@ -502,7 +502,7 @@ public:
         return std::string(value);
       }
     }
-    return std::string();
+    return {};
   }
 
   std::vector<uint8_t> getNextProtocol() const override
@@ -1502,7 +1502,7 @@ public:
         return sni;
       }
     }
-    return std::string();
+    return {};
   }
 
   std::vector<uint8_t> getNextProtocol() const override

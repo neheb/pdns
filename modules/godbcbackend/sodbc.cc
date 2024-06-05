@@ -474,7 +474,7 @@ void SODBC::setLog(bool state)
 // Returns an exception.
 SSqlException SODBC::sPerrorException(const std::string& reason)
 {
-  return SSqlException(reason);
+  return {reason};
 }
 
 std::unique_ptr<SSqlStatement> SODBC::prepare(const string& query, int nparams)

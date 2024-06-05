@@ -364,7 +364,7 @@ SPgSQL::~SPgSQL()
 
 SSqlException SPgSQL::sPerrorException(const string& reason)
 {
-  return SSqlException(reason + string(": ") + (d_db ? PQerrorMessage(d_db) : "no connection"));
+  return {reason + string(": ") + (d_db ? PQerrorMessage(d_db) : "no connection")};
 }
 
 void SPgSQL::execute(const string& query)
